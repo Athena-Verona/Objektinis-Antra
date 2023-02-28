@@ -5,8 +5,10 @@
 #include <vector>
 #include <limits>
 #include <random>
+#include <stdexcept>
 
-
+using std::stof;
+using std::stoi;
 using std::cout;
 using std::cin;
 using std::endl;
@@ -15,7 +17,8 @@ using std::setw;
 using std::setprecision;
 using std::string;
 using std::copy;
+using std::sort;
 using std::fixed;
 using std::vector;
 using std::swap;
-using std::srand;
+using std::runtime_error;
