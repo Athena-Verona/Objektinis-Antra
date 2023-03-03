@@ -21,19 +21,31 @@ void nuskaitymas(string read_vardas, vector<studentas>& studentai){
     studentas temp;
     open_f=fopen(read_vardas.c_str(),"r");
 
-    try{
-        if (open_f==NULL) { 
-            throw runtime_error("Failas nebuvo atidarytas. Patikrinkite, ar jo pavadinimas tikrai 'kursiokai.txt' ir paleiskite programa is naujo\n");
+    do{ 
+        try{
+            if (open_f==NULL) { 
+                throw runtime_error("Failas nebuvo atidarytas. Suveskite pavadinima failo, kuri norite perduoti (nepamirskite .txt!)\n");
+            }
         }
-    }
-    catch (const runtime_error& e) {
-        cout << e.what();
-    }
+        catch (const runtime_error& e) {
+            string name;
+            cout << e.what();
+            cin >> name;
+            open_f=fopen(name.c_str(),"r");
+        }
+    } while (open_f==NULL);
 
+    fgets(eil_r,257,open_f);
+    string str(eil_r);
+    int nd = 0;
+    size_t position = str.find("ND");
+    while (position != string::npos){
+        nd++;
+        position = str.find("ND", position + 1);
+    }
     while (fgets(eil_r,257,open_f) != 0){
         std::string::size_type sz;
         string str(eil_r); //char[] i string
-        int x = 0;
         //pagal file struktura, pirmi 32 simboliai yra vardas ir pavarde
         for (int i=0;i<32;i++){
             temp.vardas[i]=str[0];
@@ -42,8 +54,8 @@ void nuskaitymas(string read_vardas, vector<studentas>& studentai){
         temp.vardas[32] = '\0';
         //tada eina kazkiek tusciu simboliu
         while (str[0]==' ') str.erase(0, 1);
-        //tada eina 20 pazymiu
-        for (int i=0;i<20;i++){
+        //tada eina pazymiai, kiek ju buvo nuskaityta is pirmos eilutes
+        for (int i=0;i<nd;i++){
             temp.paz.push_back(stof(str,&sz));
             str.erase(0, sz); 
             while (str[0]==' ') str.erase(0, 1);
