@@ -17,25 +17,12 @@ void balas(studentas &temp){
 }
 
 void nuskaitymas(string read_vardas, vector<studentas>& studentai){
-    char eil_r[257]; //viena eilute
+    char eil_r[1000]; //viena eilute
     studentas temp;
     open_f=fopen(read_vardas.c_str(),"r");
-
-    do{ 
-        try{
-            if (open_f==NULL) { 
-                throw runtime_error("Failas nebuvo atidarytas. Suveskite pavadinima failo, kuri norite perduoti (nepamirskite .txt!)\n");
-            }
-        }
-        catch (const runtime_error& e) {
-            string name;
-            cout << e.what();
-            cin >> name;
-            open_f=fopen(name.c_str(),"r");
-        }
-    } while (open_f==NULL);
-
-    fgets(eil_r,257,open_f);
+    //pakeista: nuskaitoma pirma eilute ir randamas nd skaicius
+    auto start = std::chrono::system_clock::now();
+    fgets(eil_r,1000,open_f);
     string str(eil_r);
     int nd = 0;
     size_t position = str.find("ND");
@@ -43,19 +30,19 @@ void nuskaitymas(string read_vardas, vector<studentas>& studentai){
         nd++;
         position = str.find("ND", position + 1);
     }
-    while (fgets(eil_r,257,open_f) != 0){
+    while (fgets(eil_r,1000,open_f) != 0){
         std::string::size_type sz;
         string str(eil_r); //char[] i string
         //pagal file struktura, pirmi 32 simboliai yra vardas ir pavarde
-        for (int i=0;i<32;i++){
+        for (int i=0;i<30;i++){
             temp.vardas[i]=str[0];
             str.erase(0, 1); 
         }
-        temp.vardas[32] = '\0';
+        temp.vardas[30] = '\0';
         //tada eina kazkiek tusciu simboliu
         while (str[0]==' ') str.erase(0, 1);
         //tada eina pazymiai, kiek ju buvo nuskaityta is pirmos eilutes
-        for (int i=0;i<nd;i++){
+        for (int i=0;i<nd-1;i++){
             temp.paz.push_back(stof(str,&sz));
             str.erase(0, sz); 
             while (str[0]==' ') str.erase(0, 1);
@@ -66,6 +53,9 @@ void nuskaitymas(string read_vardas, vector<studentas>& studentai){
         studentai.push_back(temp);
         temp.paz.clear();
     }
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> diff = end-start;
+    printf("\n> Failo skaitymas truko: %f sekundžių\n", diff.count());
     fclose(open_f);
 }
 
@@ -77,12 +67,12 @@ void spausd(string write_vardas, vector<studentas> studentai){
     char m[]="Mediana(Med.)";
     fprintf(out_f, "%-16s%16s   %15s%15s\n", v,p,g,m);
     fprintf(out_f, "-----------------------------------------------------------------\n");
-    for (auto &i:studentai ) fprintf(out_f, "%-32s   %15.2f%15.2f\n", i.vardas, i.gal_med, i.gal_vid);
+    for (auto &i:studentai ) fprintf(out_f, "%-32s   %15.2f%15.2f\n", i.vardas, i.gal_vid, i.gal_med);
     fclose(out_f);
     studentai.resize(0);
 }
 
 bool Palyginimas(const studentas &a, const studentas &b)
 {
-    return a.vardas[0] < b.vardas[0];
+    return a.gal_vid < b.gal_vid;
 }
