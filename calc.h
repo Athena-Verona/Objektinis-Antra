@@ -9,6 +9,6 @@ struct studentas{
 
 void gen_map(int N, int size);
 void balas(studentas&);
-void nuskaitymas(string, vector<studentas>&);
-void spausd(string, vector<studentas>);
+void spausd(string, list<studentas>);
 bool Palyginimas(const studentas&, const studentas&);
+bool Palyginimas1(const studentas&);

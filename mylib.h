@@ -3,13 +3,17 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <deque>
 #include <limits>
 #include <random>
 #include <stdexcept>
 #include <chrono>
 #include <map>
+#include <list>
 #include <filesystem>
 
+using std::list;
+using std::deque;
 using std::stof;
 using std::stoi;
 using std::cout;

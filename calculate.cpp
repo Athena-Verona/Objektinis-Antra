@@ -15,51 +15,7 @@ void balas(studentas &temp){
     float mediana = size % 2 == 0 ? (temp.paz[vidurys-1] + temp.paz[vidurys]) / 2.0 : temp.paz[vidurys];
     temp.gal_med = 0.4*mediana + 0.6*temp.egz;
 }
-
-void nuskaitymas(string read_vardas, vector<studentas>& studentai){
-    char eil_r[1000]; //viena eilute
-    studentas temp;
-    open_f=fopen(read_vardas.c_str(),"r");
-    //pakeista: nuskaitoma pirma eilute ir randamas nd skaicius
-    auto start = std::chrono::system_clock::now();
-    fgets(eil_r,1000,open_f);
-    string str(eil_r);
-    int nd = 0;
-    size_t position = str.find("ND");
-    while (position != string::npos){
-        nd++;
-        position = str.find("ND", position + 1);
-    }
-    while (fgets(eil_r,1000,open_f) != 0){
-        std::string::size_type sz;
-        string str(eil_r); //char[] i string
-        //pagal file struktura, pirmi 32 simboliai yra vardas ir pavarde
-        for (int i=0;i<30;i++){
-            temp.vardas[i]=str[0];
-            str.erase(0, 1); 
-        }
-        temp.vardas[30] = '\0';
-        //tada eina kazkiek tusciu simboliu
-        while (str[0]==' ') str.erase(0, 1);
-        //tada eina pazymiai, kiek ju buvo nuskaityta is pirmos eilutes
-        for (int i=0;i<nd-1;i++){
-            temp.paz.push_back(stof(str,&sz));
-            str.erase(0, sz); 
-            while (str[0]==' ') str.erase(0, 1);
-        }
-        //tada eina egz rezultatas
-        temp.egz = stoi(str);
-        balas(temp);
-        studentai.push_back(temp);
-        temp.paz.clear();
-    }
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> diff = end-start;
-    printf("\n> Failo skaitymas truko: %f sekundžių\n", diff.count());
-    fclose(open_f);
-}
-
-void spausd(string write_vardas, vector<studentas> studentai){
+void spausd(string write_vardas, list<studentas> studentai){
     out_f=fopen(write_vardas.c_str(),"w");
     char v[]="Vardas";
     char p[]="Pavarde";
@@ -71,8 +27,11 @@ void spausd(string write_vardas, vector<studentas> studentai){
     fclose(out_f);
     studentai.resize(0);
 }
-
 bool Palyginimas(const studentas &a, const studentas &b)
 {
     return a.gal_vid < b.gal_vid;
+}
+bool Palyginimas1(const studentas &a)
+{
+    return a.gal_vid >= 5;
 }
