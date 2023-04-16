@@ -1,5 +1,41 @@
 # Objektinis-programavimas
 2023 metų ISI 1 kurso objektinio programavimo uždavinys
+
+# Galutinė 1.0 versija
+
+Galutinė 1 projekto versija, apjungianti visas 5 praeitas versijas. Galima rasti du aplankus, kuriuose yra du skirtingi variantai. 
+
+### Paleidimas
+1. Pasirinkite aplanką ir paleiskite makefile parašius **make** į savo komandinę eilutę. 
+2. Paleidimui parašykite **./main**
+## Aplankas "vector"
+Tai galutinė versija, optimizuota su sparčiais konteinerių algoritmais. Ankstesnėse versijose jau realizuota sparti versija, todėl palyginimo nėra.
+## Aplankas "vector deque list"
+Galima rinktis, kurį studentų skaidymo būdą rinktis ir galima pamatyti konteinerių spartos analizę.
+### Spartos analizė
+#### Skaidymas į du naujus konteinerius
+|            | Vector | Deque | List |
+|------------|--------|-------|------|
+| 1000       |    0.000286    |    0.000185   |    0.000263  |
+| 10 000     |    0.001677    |    0.005085   |   0.003295   |
+| 100 000    |    0.032419    |   0.025153    |   0.054680   |
+| 1 000 000  |     0.254413   |    0.591458   |   0.535757   |
+| 10 000 000 |    3.570025    |    3.128859   |   6.356380   |
+
+ **Užimta 2,5-3 GB atminties su 10 mil**
+
+#### Skaidymas į vieną naują konteinerį
+
+|            | Vector | Deque | List |
+|------------|--------|-------|------|
+| 1000       |  0.000266      |    0.000344   |  0.000260    |
+| 10 000     |   0.002467    |    0.001799   |   0.004344   |
+| 100 000    |    0.025050    |    0.024613   |    0.064135  |
+| 1 000 000  |    0.240916    |    0.253827   |    0.757946  |
+| 10 000 000 |    2.747569    |   2.935171    |  7.743919    |
+
+ **Užimta 1,7-2 GB atminties su 10 mil**
+
 # Penktoji versija
 Šioje versijoje nebuvo daug kas pakeista, tik šie veiksmai - failo nuskaitymas, sortinimas didėjimo tvarka ir skaidymas į du failus - atliekami trimis skirtingais būdais: **std::vector, std::deque ir std::lis**t. Paleista programa automatiškai atlieka skaičiavimus visais trimis būdais.
 Kadangi failai vienodi palyginus su praeita versija, čia pateikiami tik spartos išmatavimai. 
