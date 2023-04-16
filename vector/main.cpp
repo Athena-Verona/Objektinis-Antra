@@ -5,7 +5,7 @@ template<typename C,
     typename T = std::decay_t<
         decltype(*begin(std::declval<C>()))>>
 auto nuskaitymas(string read_vardas, C& container){
-    FILE *open_f, *out_f;
+    FILE *open_f;
     char eil_r[1000]; //viena eilut
     studentas temp;
     open_f=fopen(read_vardas.c_str(),"r");
@@ -43,7 +43,7 @@ auto nuskaitymas(string read_vardas, C& container){
 }
 
 int main(){
-    int nd, sk;
+    int nd=0, sk;
     char uzklausa='y';
     namespace fs = std::filesystem;
     fs::path f{ "studentai1000.txt" };
@@ -105,112 +105,44 @@ int main(){
             open_f=fopen(read_pavadinimas.c_str(),"r");
         }
     } while (open_f==NULL);
-    cout << "> Failo skaitymas vyksta..." << endl;
     //auto start_big = std::chrono::system_clock::now();
     vector<studentas> mas;
-    deque<studentas> dek;
-    list<studentas> lis;
-    printf("\n\n|----------------- NAUDOJANT VEKTORIU -----------------|\n");
+    cout << "> Failo skaitymas vyksta..." << endl << endl;
 
     auto start = std::chrono::system_clock::now();
-      nuskaitymas(read_pavadinimas, mas);
+    nuskaitymas(read_pavadinimas, mas);
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> diff = end-start;
-    printf("\n> Failo skaitymas i vektoriu truko: %f sekundžių\n", diff.count());
+
+    printf("\n> Failo skaitymas i vektorių truko: %f sekundžių\n", diff.count());
 
     start = std::chrono::system_clock::now();
       sort(mas.begin(),mas.end(), Palyginimas); //vector
     end = std::chrono::system_clock::now();
     diff = end-start;
-    printf("> Rusiavimas vektoriuje truko: %f sekundžių\n", diff.count());
+    printf("> Rūšiavimas vektoriuje truko: %f sekundžių\n", diff.count());
     int start_size = mas.size();
 
     start = std::chrono::system_clock::now();
-      auto i = std::find_if(mas.begin(), mas.end(),Palyginimas1);
-      vector<studentas> mas_bad(i, mas.end());
-      mas.resize(mas.size()-mas_bad.size());
-      //vector<studentas> mas_bad, mas_good;
-      //for (auto i: mas) {
-      //  if (i.gal_vid<=5) mas_bad.push_back(i);
-      //  else mas_good.push_back(i);
-      //}
+    auto i = std::find_if(mas.begin(), mas.end(),Palyginimas1);
+    vector<studentas> mas_bad(i, mas.end());  
+    mas.resize(mas.size()-mas_bad.size());
     end = std::chrono::system_clock::now();
     diff = end-start;
+
     printf("> Skaidymas vektoriuje truko: %f sekundžių\n", diff.count());
+
+    start = std::chrono::system_clock::now();
+    spausd("viezlybieji.txt", mas_bad);//galima un
+    spausd("nenaudeliai.txt", mas);
+    end = std::chrono::system_clock::now();
+    diff = end-start;
+    printf("\n> %i studentų spausdinimas  truko: %f sekundžių\n", start_size, diff.count());
+    
     for (auto &i : mas) i.paz.clear();
     mas.clear();
     for (auto &i : mas_bad) i.paz.clear();
     mas_bad.clear();
-
-    printf("\n|----------------- NAUDOJANT DEKA -----------------|\n");
-
-    start = std::chrono::system_clock::now();
-      nuskaitymas(read_pavadinimas, dek);
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("\n> Failo nuskaitymas dekyje truko: %f sekundžių\n", diff.count());
-
-    start = std::chrono::system_clock::now();
-      sort(dek.begin(),dek.end(), Palyginimas);
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("> Rusiavimas dekyje truko: %f sekundžių\n", diff.count());
-    
-    start = std::chrono::system_clock::now();
-    auto a = std::find_if(dek.begin(), dek.end(), Palyginimas1);
-    deque<studentas> dek_bad(a, dek.end());
-    dek.resize(dek.size()-dek_bad.size());  
-    //deque<studentas> dek_bad, dek_good;
-    //for (auto i: dek) {
-    //  if (i.gal_vid<=5) dek_bad.push_back(i);
-    //  else dek_good.push_back(i);
-    //}
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("> Skaidymas dekyje truko: %f sekundžių\n", diff.count());
-    for (auto &i : dek) i.paz.clear();
-    dek.clear();
-    for (auto &i : dek_bad) i.paz.clear();
-    dek_bad.clear();
-
-    printf("\n\n|----------------- NAUDOJANT SARASA -----------------|\n");
-
-    start = std::chrono::system_clock::now();
-    nuskaitymas(read_pavadinimas, lis);
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("\n> Failo nuskaitymas i sarasa truko: %f sekundžių\n", diff.count());
-
-    start = std::chrono::system_clock::now();
-    lis.sort(Palyginimas);
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("> Rusiavimas sarase truko: %f sekundžių\n", diff.count());
-
-    start = std::chrono::system_clock::now();
-    auto b = std::find_if(lis.begin(), lis.end(),Palyginimas1);
-    list<studentas> lis_bad(b, lis.end());
-    lis.resize(lis.size()-lis_bad.size());  
-    //list<studentas> lis_bad, lis_good;
-    //for (auto i: lis) {
-    //  if (i.gal_vid<=5) lis_bad.push_back(i);
-    //  else lis_good.push_back(i);
-    //}
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("> Skaidymas sarase truko: %f sekundžių\n", diff.count());
-
-    start = std::chrono::system_clock::now();
-    spausd("viezlybieji.txt", lis_bad);
-    spausd("nenaudeliai.txt", lis);
-    end = std::chrono::system_clock::now();
-    diff = end-start;
-    printf("\n> %i studentų spausdinimas su list truko: %f sekundžių\n", start_size, diff.count());
-
-    for (auto &i : lis) i.paz.clear();
-    lis.clear();
-    for (auto &i : lis_bad) i.paz.clear();
-    lis_bad.clear();
     //auto end_big = std::chrono::system_clock::now();
     //std::chrono::duration<double> diff_big = end_big-start_big;
     //printf("> Visos programos veikimas truko: %f sekundžių\n\n", diff_big.count());
