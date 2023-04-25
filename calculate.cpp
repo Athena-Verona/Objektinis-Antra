@@ -2,61 +2,42 @@
 
 FILE *open_f, *out_f;
 
-void balas(studentas &temp){
-    //vidurkis
-    float vid = 0;
-    int size = temp.paz.size();
-    for (float &i:temp.paz) vid+=i;
-    vid/=size;
-    temp.gal_vid = 0.4*vid + 0.6*temp.egz;
-    //mediana
-    sort(temp.paz.begin(),temp.paz.end());
+void studentas::galBalas(){
+    int size = paz.size();
+    sort(paz.begin(),paz.end());
     int vidurys=size/2;
-    float mediana = size % 2 == 0 ? (temp.paz[vidurys-1] + temp.paz[vidurys]) / 2.0 : temp.paz[vidurys];
-    temp.gal_med = 0.4*mediana + 0.6*temp.egz;
+    double med = size % 2 == 0 ? (paz[vidurys-1] + paz[vidurys]) / 2.0 : paz[vidurys];
+    gal_med = 0.6 * egz + 0.4 * med;
+    double vid = std::accumulate(paz.begin(), paz.end(), 0.0)/paz.size();
+    gal_vid = 0.6 * egz + 0.4 * vid;
 }
-
-void nuskaitymas(string read_vardas, vector<studentas>& studentai){
-    char eil_r[257]; //viena eilute
-    studentas temp;
-    open_f=fopen(read_vardas.c_str(),"r");
-
-    try{
-        if (open_f==NULL) { 
-            throw runtime_error("Failas nebuvo atidarytas. Patikrinkite, ar jo pavadinimas tikrai 'kursiokai.txt' ir paleiskite programa is naujo\n");
-        }
+//nuskaitymas NERA MEMBER FUNKCIJA, bet iskviecia studento konstruktoriu tai pagalbine
+void nuskaitymas(string str, int nd, vector<studentas>& studentai){
+    vector<double> paz;
+    char vardas[31];
+    int egz;
+    std::string::size_type sz;
+    //pagal file struktura, pirmi 32 simboliai yra vardas ir pavarde
+    for (int i=0;i<30;i++){
+        vardas[i]=str[0];
+        str.erase(0, 1); 
     }
-    catch (const runtime_error& e) {
-        cout << e.what();
-    }
-
-    while (fgets(eil_r,257,open_f) != 0){
-        std::string::size_type sz;
-        string str(eil_r); //char[] i string
-        int x = 0;
-        //pagal file struktura, pirmi 32 simboliai yra vardas ir pavarde
-        for (int i=0;i<32;i++){
-            temp.vardas[i]=str[0];
-            str.erase(0, 1); 
-        }
-        temp.vardas[32] = '\0';
-        //tada eina kazkiek tusciu simboliu
+    vardas[30] = '\0';
+    //tada eina kazkiek tusciu simboliu
+    while (str[0]==' ') str.erase(0, 1);
+    //tada eina pazymiai, kiek ju buvo nuskaityta is pirmos eilutes
+    for (int i=0;i<nd-1;i++){
+        paz.push_back(stof(str,&sz));
+        str.erase(0, sz); 
         while (str[0]==' ') str.erase(0, 1);
-        //tada eina 20 pazymiu
-        for (int i=0;i<20;i++){
-            temp.paz.push_back(stof(str,&sz));
-            str.erase(0, sz); 
-            while (str[0]==' ') str.erase(0, 1);
-        }
-        //tada eina egz rezultatas
-        temp.egz = stoi(str);
-        balas(temp);
-        studentai.push_back(temp);
-        temp.paz.clear();
     }
-    fclose(open_f);
+    egz = stoi(str);
+    string vardas_(vardas);
+    studentas temp(vardas_, egz, paz); //suveikia konstruktorius
+    temp.galBalas();
+    studentai.push_back(temp); 
+    paz.clear();
 }
-
 void spausd(string write_vardas, vector<studentas> studentai){
     out_f=fopen(write_vardas.c_str(),"w");
     char v[]="Vardas";
@@ -65,12 +46,14 @@ void spausd(string write_vardas, vector<studentas> studentai){
     char m[]="Mediana(Med.)";
     fprintf(out_f, "%-16s%16s   %15s%15s\n", v,p,g,m);
     fprintf(out_f, "-----------------------------------------------------------------\n");
-    for (auto &i:studentai ) fprintf(out_f, "%-32s   %15.2f%15.2f\n", i.vardas, i.gal_med, i.gal_vid);
+    for (auto &i:studentai ) fprintf(out_f, "%-32s   %15.2f%15.2f\n", (i.getVardas()).c_str(), i.getGal_vid(), i.getGal_med());
     fclose(out_f);
-    studentai.resize(0);
 }
-
 bool Palyginimas(const studentas &a, const studentas &b)
 {
-    return a.vardas[0] < b.vardas[0];
+    return a.getGal_vid() < b.getGal_vid();
+}
+bool Palyginimas1(const studentas &a)
+{
+    return a.getGal_vid() >= 5;
 }
