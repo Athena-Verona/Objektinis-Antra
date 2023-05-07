@@ -2,23 +2,6 @@
 #include "calc.h"
 
 int main(){
-<<<<<<< Updated upstream
-    vector<studentas> mas;
-    nuskaitymas("kursiokai.txt", mas);
-    try{
-    if (mas.empty()) { 
-        throw runtime_error("Panasu, jusu failas tuscias. Pabandykite is naujo i ji suvesti duomenis\n");
-        }
-    }
-    catch (const runtime_error& e) {
-        cout << e.what();
-        return 0;
-    }
-    sort(mas.begin(),mas.end(), Palyginimas);
-    spausd("rezultatai.txt", mas);
-    for (auto &i : mas) i.paz.clear();
-    mas.clear();
-=======
     int nd=0, sk;
     char uzklausa='y';
     namespace fs = std::filesystem;
@@ -133,5 +116,4 @@ int main(){
     //auto end_big = std::chrono::system_clock::now();
     //std::chrono::duration<double> diff_big = end_big-start_big;
     //printf("> Visos programos veikimas truko: %f sekundžių\n\n", diff_big.count());
->>>>>>> Stashed changes
 }

@@ -2,6 +2,45 @@
 
 FILE *open_f, *out_f;
 
+studentas& studentas::operator=(const studentas& v){ 
+    if (&v == this) return *this;
+    vardas = v.vardas;
+    egz = v.egz;
+    paz = v.paz;
+    galBalas();
+    return *this;
+}
+studentas& studentas::operator=(studentas&& v){
+    if (&v == this) return *this;
+    paz.clear();
+    paz = v.paz;
+    egz = v.egz;
+    vardas = v.vardas;
+    v.paz.clear();
+    v.egz = 0;
+    galBalas();
+    return *this;
+}
+std::ostream& operator<<(std::ostream& out, const studentas& v){
+    out << v.vardas << "  : " << v.gal_med << "     " << std::setprecision(2) << v.gal_vid << endl;
+    return out;
+}
+std::istream& operator>>(std::istream& in, studentas &v){
+    cout << "Iveskite studento varda :)" << endl;
+    in >> v.vardas;
+    int nd;
+    cout << "Iveskite pazymius, kai baigsite, iveskite raide" << endl;
+    while (!in.fail()){
+        in >> nd;
+        v.paz.push_back(nd);
+    }
+    in.clear();
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cout << "Dabar iveskite egzamina" << endl;
+    in >> v.egz;
+    v.galBalas();
+    return in;
+}
 void studentas::galBalas(){
     int size = paz.size();
     sort(paz.begin(),paz.end());
@@ -34,7 +73,6 @@ void nuskaitymas(string str, int nd, vector<studentas>& studentai){
     egz = stoi(str);
     string vardas_(vardas);
     studentas temp(vardas_, egz, paz); //suveikia konstruktorius
-    temp.galBalas();
     studentai.push_back(temp); 
     paz.clear();
 }
