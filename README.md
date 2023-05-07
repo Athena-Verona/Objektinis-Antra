@@ -1,5 +1,21 @@
 # Objektinis-programavimas
 2023 metų ISI 1 kurso objektinio programavimo uždavinys
+
+# Versija 1.2
+### Klasės papildymas
+
+Šioje versijoje pilnai implementuota _"rule of five"_ klasei _studentas_, aprašytoje calc.h faile. Atsiradę funkcionalumai:
+
+   1.  Default constructor: **studentas()**
+   2. Copy constructor: **studentas(const studentas& v)**
+   3. Move constructor: **studentas(studentas&& v)**
+   4. Copy assignment constructor: **studentas& operator=(const studentas& v)**
+   5. Move assignment constructor: **studentas& operator=(studentas&& v)**
+
+Taip pat realizuoti du operatoriai: išvedimo bei įvedimo:
+
+ 1. std::ostream& **operator<<**(std::ostream& out, const studentas& v)
+ 2. std::istream& **operator>>**(std::istream& in, studentas &v).
 # Versija 1.1
 Versija 1.1 jau naujoje repozitorijoje! Dabar header faile _calc.h_ aprašyta pati pirmoji šio projekto klasė: studentas. Naudojama kelios getter ir setter funkcijos, viena member funkcija.
 
