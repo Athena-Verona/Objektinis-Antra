@@ -1,16 +1,28 @@
 #include "mylib.h"
 
-class studentas{
-    private:
+class zmogus{
+    protected:
     string vardas;
-    vector<double> paz;
+    vector<double> paz; //o kodel ne? zmogus daro nd, bet tampa studentu tik atejes i egzamina :)
+    zmogus(string v, vector<double> p={}) : vardas{v}, paz{p} {}
+
+    public:
+    virtual string getVardas() const = 0; //abstrakcios funkcijos
+    virtual double getGal_vid() const = 0;
+    virtual double getGal_med() const = 0;
+    virtual void galBalas() = 0;
+    virtual ~zmogus() { paz.clear(); }
+};
+class studentas: public zmogus{
+    private:
     int egz;
     double gal_vid, gal_med;
+
     public:
-    studentas() : egz(0){} //default
-    studentas(string vardas_,int egz_,vector<double> paz_) : vardas{vardas_}, egz{egz_}, paz{paz_} { galBalas(); } //given
-    studentas(const studentas& v) : vardas{v.vardas}, egz{v.egz}, paz{v.paz} { galBalas(); } //copy constructor
-    studentas(studentas&& v) : vardas{std::move(v.vardas)}, egz{v.egz}, paz{std::move(v.paz)} { v.egz = 0; v.paz.clear(); galBalas(); } //move constructor
+    studentas() : zmogus{""}{}
+    studentas(string vardas, int egz_, vector<double> paz) : zmogus{vardas, paz}, egz{egz_} { galBalas(); } //default
+    studentas(const studentas& v) : zmogus{v.vardas, v.paz}, egz{v.egz} { galBalas(); } //copy constructor
+    studentas(studentas&& v) : zmogus{std::move(v.vardas), std::move(v.paz)}, egz{v.egz} { v.egz = 0; v.paz.clear(); galBalas(); } //move constructor
     studentas& operator=(const studentas& v); //copy assignment construcor
     studentas& operator=(studentas&& v); //move assignment constructor
     friend std::ostream& operator<<(std::ostream& out, const studentas& v); //out
@@ -19,7 +31,8 @@ class studentas{
     inline double getGal_vid() const { return gal_vid; }
     inline double getGal_med() const { return gal_med; }
     void galBalas();
-    ~studentas() { paz.clear(); } //destruktorius
+    ~studentas() {} //destruktorius
+    //using zmogus::getVardas; //kad gautume protected member funkcija is base klases kaip public is derived
 };
 
 void gen_map(int, int);

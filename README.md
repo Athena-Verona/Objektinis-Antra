@@ -1,12 +1,24 @@
 # Objektinis-programavimas
 2023 metų ISI 1 kurso objektinio programavimo uždavinys
 
+# Versija 1.5
+### Bazinės ir išvestinės klasės sukūrimas
+
+Šioje versijoje atsiranda nauja klasė: *class zmogus*, kuri yra abstrakti ir atlieka bazinės klasės funkciją išvestinei klasei *class Studentas*. 
+
+Jos abstrakčios funkcijos:
+   1. string getVardas() const = 0; 
+   2. double getGal_vid() const = 0;
+   3. double getGal_med() const = 0;
+   4. void galBalas() = 0;
+Jos konstruktorius ir kintamieji yra *protected*, kad juos galėtų pasiekti išvestinės klasės, bet ne išorė.
+
 # Versija 1.2
 ### Klasės papildymas
 
 Šioje versijoje pilnai implementuota _"rule of five"_ klasei _studentas_, aprašytoje calc.h faile. Atsiradę funkcionalumai:
 
-   1.  Default constructor: **studentas()**
+   1. Default constructor: **studentas()**
    2. Copy constructor: **studentas(const studentas& v)**
    3. Move constructor: **studentas(studentas&& v)**
    4. Copy assignment constructor: **studentas& operator=(const studentas& v)**
@@ -14,8 +26,9 @@
 
 Taip pat realizuoti du operatoriai: išvedimo bei įvedimo:
 
- 1. std::ostream& **operator<<**(std::ostream& out, const studentas& v)
- 2. std::istream& **operator>>**(std::istream& in, studentas &v).
+   1. std::ostream& **operator<<**(std::ostream& out, const studentas& v)
+   2. std::istream& **operator>>**(std::istream& in, studentas &v).
+
 # Versija 1.1
 Versija 1.1 jau naujoje repozitorijoje! Dabar header faile _calc.h_ aprašyta pati pirmoji šio projekto klasė: studentas. Naudojama kelios getter ir setter funkcijos, viena member funkcija.
 
