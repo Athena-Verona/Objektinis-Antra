@@ -1,6 +1,23 @@
 # Objektinis-programavimas
 2023 metų ISI 1 kurso objektinio programavimo uždavinys
 
+#Versija 2.0
+
+## Dėmesio! Pritaikyta tik **Windows** platformai
+### Paleidimo instrukcija:
+
+1. Parsisiųsti failus iš github repo
+2. Paleisti failą "ProgramaLab.msi"
+3. Praeiti instaliavimo žingsnius, leisti programai daryti pokyčius kompiuteryje
+4. Jūsų programa vadinsis "ObjektinisInstaller.exe", paleiskite ją.
+
+### Programos funkcionalumas:
+
+1.  Pirma programa parodo jau esamus studentų failus ir paklausia, ar norite tokį sukurti. Galite paspausti y/n mygtukus kaip "yes" arba "no"
+2. Atspausdinamas failo kūrimo laikas, toliau klausiama, kurį failą norite nuskaityti
+3. Pasirinktas failas yra nuskaitomas, visų studentų galutiniai balai apskaičiuojami ir išvedami į du rezultatų failus: viežlybieji ir nenaudėliai
+4. Galite patikrinti programos laiką
+ 
 # Versija 1.5
 ### Bazinės ir išvestinės klasės sukūrimas
 
