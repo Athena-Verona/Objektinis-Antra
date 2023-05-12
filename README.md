@@ -1,7 +1,7 @@
 # Objektinis-programavimas
 2023 metų ISI 1 kurso objektinio programavimo uždavinys
 
-#Versija 2.0
+# Versija 2.0
 
 ## Dėmesio! Pritaikyta tik **Windows** platformai
 ### Paleidimo instrukcija:
