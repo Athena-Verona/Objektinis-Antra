@@ -3,13 +3,21 @@
 
 # Versija 2.0
 
-## Dėmesio! Pritaikyta tik **Windows** platformai
+## Dėmesio! Pritaikyta tiek **Windows**, tiek **MacOS** platformai
 ### Paleidimo instrukcija:
+## Windows:
 
 1. Parsisiųsti failus iš github repo
 2. Paleisti failą "ProgramaLab.msi"
 3. Praeiti instaliavimo žingsnius, leisti programai daryti pokyčius kompiuteryje
 4. Jūsų programa vadinsis "ObjektinisInstaller.exe", paleiskite ją.
+
+## MacOS:
+
+1. Parsisiųsti failus iš github repo
+2. Paleisti failą "Idiegimo_programa.dmg"
+3. Kompiuterio Dekstop atsiras naujas disk image: paspauskite ant jo ir taip rasite Unix Executable file
+5. Jūsų programa vadinsis "main", paleiskite ją.
 
 ### Programos funkcionalumas:
 
