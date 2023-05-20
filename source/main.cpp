@@ -1,5 +1,6 @@
 #include "mylib.h"
 #include "calc.h"
+#include "vektor.h"
 
 int main(){
     int nd=0, sk;
@@ -19,7 +20,7 @@ int main(){
       cin >> sk;
       do {
         try {
-          if (sk<1||sk>10000000||cin.fail()) throw runtime_error("> Netinkamas studentu kiekis (Ne tarp 0 ir 10 000 000), iveskite iš naujo\n");
+          if (sk<1||sk>100000000||cin.fail()) throw runtime_error("> Netinkamas studentu kiekis (Ne tarp 0 ir 10 000 000), iveskite iš naujo\n");
         }
         catch (const runtime_error& e) {
         cout << e.what();
@@ -27,7 +28,7 @@ int main(){
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cin >> sk;
         }
-      } while (sk<1||sk>10000000||cin.fail());
+      } while (sk<1||sk>100000000||cin.fail());
       cout << "> Kiek pažymių generuoti?" << endl;
       cin >> nd;
       do {
@@ -79,21 +80,24 @@ int main(){
         nd++;
         position = str.find("ND", position + 1);
     }
+    int count = 0;
     while (fgets(eil_r,1000,open_f) != 0){
       string str(eil_r);
-      nuskaitymas(eil_r, nd, mas); //kvieciama nuskaitymo funkcija
+      studentas temp = nuskaitymas(eil_r, nd); //kvieciama nuskaitymo funkcija
+      mas.push_back(temp);
+      if (mas.capacity() == mas.size()) count++;
     }
     fclose(open_f);
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> diff = end-start;
 
     printf("\n> Failo skaitymas i vektorių truko: %f sekundžių\n", diff.count());
-
+    printf("> Perskirsktymas ivyko %i kartu\n", count);
     start = std::chrono::system_clock::now();
     sort(mas.begin(),mas.end(), Palyginimas); //vector
     end = std::chrono::system_clock::now();
     diff = end-start;
-    printf("> Rūšiavimas vektoriuje truko: %f sekundžių\n", diff.count());
+    printf("\n> Rūšiavimas vektoriuje truko: %f sekundžių\n", diff.count());
     int start_size = mas.size();
 
     start = std::chrono::system_clock::now();
@@ -110,9 +114,9 @@ int main(){
     end = std::chrono::system_clock::now();
     diff = end-start;
     printf("\n> Studentų spausdinimas  truko: %f sekundžių\n", diff.count());
-    
+
     mas.clear();
-    mas_bad.clear();
+    //mas_bad.clear();
     //auto end_big = std::chrono::system_clock::now();
     //std::chrono::duration<double> diff_big = end_big-start_big;
     //printf("> Visos programos veikimas truko: %f sekundžių\n\n", diff_big.count());

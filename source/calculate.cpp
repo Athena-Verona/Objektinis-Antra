@@ -51,7 +51,7 @@ void studentas::galBalas(){
     gal_vid = 0.6 * egz + 0.4 * vid;
 }
 //nuskaitymas NERA MEMBER FUNKCIJA, bet iskviecia studento konstruktoriu tai pagalbine
-void nuskaitymas(string str, int nd, vector<studentas>& studentai){
+studentas nuskaitymas(string str, int nd){
     vector<double> paz;
     char vardas[31];
     int egz;
@@ -73,7 +73,7 @@ void nuskaitymas(string str, int nd, vector<studentas>& studentai){
     egz = stoi(str);
     string vardas_(vardas);
     studentas temp(vardas_, egz, paz); //suveikia konstruktorius
-    studentai.push_back(temp); 
+    return temp;
     paz.clear();
 }
 void spausd(string write_vardas, vector<studentas> studentai){

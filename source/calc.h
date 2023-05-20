@@ -4,8 +4,7 @@ class zmogus{
     protected:
     string vardas;
     vector<double> paz; //o kodel ne? zmogus daro nd, bet tampa studentu tik atejes i egzamina :)
-    zmogus(string v, vector<double> p={}) : vardas{v}, paz{p} {}
-
+    zmogus(string v = "", vector<double> p={}) : vardas{v}, paz{p} {}
     public:
     virtual string getVardas() const = 0; //abstrakcios funkcijos
     virtual double getGal_vid() const = 0;
@@ -17,9 +16,8 @@ class studentas: public zmogus{
     private:
     int egz;
     double gal_vid, gal_med;
-
     public:
-    studentas() : zmogus{""}{}
+    studentas() : zmogus{} {}
     studentas(string vardas, int egz_, vector<double> paz) : zmogus{vardas, paz}, egz{egz_} { galBalas(); } //default
     studentas(const studentas& v) : zmogus{v.vardas, v.paz}, egz{v.egz} { galBalas(); } //copy constructor
     studentas(studentas&& v) : zmogus{std::move(v.vardas), std::move(v.paz)}, egz{v.egz} { v.egz = 0; v.paz.clear(); galBalas(); } //move constructor
@@ -36,7 +34,7 @@ class studentas: public zmogus{
 };
 
 void gen_map(int, int);
-void nuskaitymas(string, int, vector<studentas>&); 
+studentas nuskaitymas(string, int); 
 void spausd(string, vector<studentas>);
 bool Palyginimas(const studentas&, const studentas&); //Perduoti objects per nuoroda & yra good
 bool Palyginimas1(const studentas&);
