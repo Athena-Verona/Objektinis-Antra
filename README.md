@@ -22,48 +22,48 @@ Trys tyrimai, atlikti su nauja Vektorius klase. Repozitorijos failai:
 
 ## Funkcijų reserve(), shrink_to_fit(), erase(), pop_back(), resize() funkcionalumo palyginimas:
 
-**Tikrinama reserve(100) <<<<<**
+**Tikrinama reserve(100)**
 std::vector capacity pries reserve(100):     0
 std::vector capacity po reserve(100):   10
---------------
+
 Vektorius capacity pries reserve(100):     0
 Vektorius capacity po reserve(100):   100
 
-**Tikrinama shrink_to_fit() <<<<<**
+**Tikrinama shrink_to_fit()**
 std::vector capacity pries shrink_to_fit():   100
 std::vector capacity po shrink_to_fit():   
---------------
+
 Vektorius capacity pries shrink_to_fit():   100
 Vektorius capacity po shrink_to_fit():     4
 
-**Tikrinama erase() <<<<<**
-std::vector pries istrinant 3 nari: 
+**Tikrinama erase()**
+std::vector pries istrinant 3 nari:
 1 2 3 4 
 std::vector istrynus 3 nari: 
 1 2 3 
---------------
+
 Vektorius pries istrinant 3 nari: 
 1 2 3 4 
 Vektorius istrynus 3 nari: 
 1 2 3 
 
-**Tikrinama pop_back() <<<<<**
+**Tikrinama pop_back()**
 std::vector pries istrinant paskutini nari: 
 1 2 3 
 std::vector istrynus paskutini nari: 
 1 2 
---------------
+
 Vektorius pries istrinant paskutini nari: 
 1 2 3 
 Vektorius istrynus paskutini nari: 
 1 2 
 
-**Tikrinama resize() <<<<<**
+**Tikrinama resize()**
  std::vector pries resize(3): 
 1 2 1 2 3 4 
 std::vector po resize(3): 
 1 2 1 
---------------
+
 Vektorius pries resize(3): 
 1 2 1 2 3 4 
 Vektorius po resize(3): 
