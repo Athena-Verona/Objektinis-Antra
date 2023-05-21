@@ -8,7 +8,7 @@ Trys tyrimai, atlikti su nauja Vektorius klase. Repozitorijos failai:
 2. funciontality.cpp: kodas, skirtas parodyti, kad Vektorius ir std::vector veikia taip pat
 3. speed.cpp: kodas, skirtas parodyti spartos palyginimus tarp šių dviejų konteinerių.
 
-# 100 000 000 elementų užpildymas ir su std::vector, ir su class Vektorius pareikalavo resursų perskirstymo _27 kartus_
+## 100 000 000 elementų užpildymas ir su std::vector, ir su class Vektorius pareikalavo resursų perskirstymo _27 kartus_
 
 ## Spartos palyginimas tarp mano Vektorius class ir std::vector su push_back:
 
