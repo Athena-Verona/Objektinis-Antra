@@ -1,6 +1,73 @@
 # Objektinis-programavimas
 2023 metų ISI 1 kurso objektinio programavimo uždavinys
 
+# Eksperimentiniai Vector tyrimai
+
+Trys tyrimai, atlikti su nauja Vektorius klase. Repozitorijos failai:
+1. source (aplankas): čia yra patobulinta V2.0 versija, realizuota su nauja Vektorius klase vietoje std::vector.
+2. funciontality.cpp: kodas, skirtas parodyti, kad Vektorius ir std::vector veikia taip pat
+3. speed.cpp: kodas, skirtas parodyti spartos palyginimus tarp šių dviejų konteinerių.
+
+# 100 000 000 elementų užpildymas ir su std::vector, ir su class Vektorius pareikalavo resursų perskirstymo _27 kartus_
+
+## Spartos palyginimas tarp mano Vektorius class ir std::vector su push_back:
+
+|             | std::vector | Mano Vektorius |
+|-------------|-------------|----------------|
+| 10 000      | 0.00579     | 0.00035        |
+| 100 000     | 0.00967     | 0.00372        |
+| 1 000 000   | 0.06306     | 0.03215        |
+| 10 000 000  | 0.58459     | 0.31156        |
+| 100 000 000 | 5.69638     | 3.28554        |
+
+## Funkcijų reserve(), shrink_to_fit(), erase(), pop_back(), resize() funkcionalumo palyginimas:
+
+>>>>> Tikrinama reserve(100) <<<<<
+> std::vector capacity pries reserve(100):     0
+> std::vector capacity po reserve(100):   100
+
+> Vektorius capacity pries reserve(100):     0
+> Vektorius capacity po reserve(100):   100
+
+>>>>> Tikrinama shrink_to_fit() <<<<<
+> std::vector capacity pries shrink_to_fit():   100
+> std::vector capacity po shrink_to_fit():     4
+
+> Vektorius capacity pries shrink_to_fit():   100
+> Vektorius capacity po shrink_to_fit():     4
+
+>>>>> Tikrinama erase() <<<<<
+> std::vector pries istrinant 3 nari: 
+1 2 3 4 
+> std::vector istrynus 3 nari: 
+1 2 3 
+
+> Vektorius pries istrinant 3 nari: 
+1 2 3 4 
+> Vektorius istrynus 3 nari: 
+1 2 3 
+
+>>>>> Tikrinama pop_back() <<<<<
+> std::vector pries istrinant paskutini nari: 
+1 2 3 
+> std::vector istrynus paskutini nari: 
+1 2 
+
+> Vektorius pries istrinant paskutini nari: 
+1 2 3 
+> Vektorius istrynus paskutini nari: 
+1 2 
+
+>>>>> Tikrinama resize() <<<<<
+> std::vector pries resize(3): 
+1 2 1 2 3 4 
+> std::vector po resize(3): 
+1 2 1 
+> Vektorius pries resize(3): 
+1 2 1 2 3 4 
+> Vektorius po resize(3): 
+1 2 1 
+
 # Versija 2.0
 
 ## Dėmesio! Pritaikyta tiek **Windows**, tiek **MacOS** platformai
